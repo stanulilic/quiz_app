@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+<div class="container">
+ <h2><a href="#">Quiz App</h3>
+ <section class="quiz">
+   <p class="quiz__tracker">Question 1 of 4</p>
+    <div class="quiz__container">
+    <h1  class="quiz__question">
+    Who Directed Avengers Endgame?
+    </h1>
+    <form class="quiz_choices">
+     <input type="radio" id="choice" name="answers">
+     <label for="choice">Mark Ruffalo</label>
+     <input type="radio" id="choice" name="answers">
+     <label for="choice">The Russo Brothers</label>
+     <input type="radio" id="choice" name="answers">
+     <label for="choice">Samuel L Jackson</label>
+     <input type="radio" id="choice" name="answers">
+     <label for="choice">David Cameron</label>
+    </form>
+    </div>
+
+ <div class="quiz__buttons">
+    <button class="prev btn btn-prev">Previous</button>
+    <button class="prev btn btn-next">Next</button>
+ </div>
+ <div class="quiz__progressbar">
+ <progress value="22" max="100"></progress>
+ </div>
+ </section>
+ </div>
+    
+<script src="main.js"></script>
+</body>
+</html>
