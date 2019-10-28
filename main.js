@@ -1,61 +1,88 @@
-var quizContainer = document.querySelector(".quiz__container");
+const nextBtn = document.querySelector('.btn-next');
+const quizWrapper = document.querySelector('.quiz');
+
+let questionCount = 1;
 
 const questions = [
   {
-    question: "Who directed Avengers Endgame?",
+    question: 'Who directed Avengers Endgame?',
     choices: [
-      "Mark Ruffalo",
-      "The Russo Brothers",
-      "Samuel L Jackson",
-      "Christopher Nolan"
+      'Mark Ruffalo',
+      'The Russo Brothers',
+      'Samuel L Jackson',
+      'Christopher Nolan',
     ],
-    answer: 1
+    answer: 1,
   },
   {
-    question: "Who directed the Titanic Movie?",
+    question: 'Who directed the Titanic Movie?',
     choices: [
-      "David Cameron",
-      "Jamie Foxx",
-      "The Russo Brothers",
-      "Taika Watiti"
+      'David Cameron',
+      'Jamie Foxx',
+      'The Russo Brothers',
+      'Taika Watiti',
     ],
-    answer: 0
+    answer: 0,
   },
   {
-    question: "Who directed  The Dark Knight?",
+    question: 'Who directed  The Dark Knight?',
     choices: [
-      "Steven Spielberg",
-      "Brad Cooper",
-      "Mel Gibson",
-      "Christopher Nolan"
+      'Steven Spielberg',
+      'Brad Cooper',
+      'Mel Gibson',
+      'Christopher Nolan',
     ],
-    answer: 4
+    answer: 4,
   },
   {
-    question: "Who plays Black Widow in Avengers?",
+    question: 'Who plays Black Widow in Avengers?',
     choices: [
-      "Emily Brunt",
-      "Sandra Bullock",
-      "Scarlet Johannson",
-      "Angelina Jolie"
+      'Emily Brunt',
+      'Sandra Bullock',
+      'Scarlet Johannson',
+      'Angelina Jolie',
     ],
-    answer: 3
-  }
+    answer: 3,
+  },
 ];
 
-function renderQuestion(quiz) {
+function renderQuestion(quiz, index) {
   const markup = `
+<div class="quiz__data">
+ <p class="quiz__tracker">Question ${questionCount} of ${questions.length}</p>
+<div class="quiz__container" id=${index}>
 <h1  class="quiz__question">
 ${quiz.question}
 </h1>
 <form class="quiz__choices">
-${quiz.choices.map((choice) =>  `<p>
+${quiz.choices
+    .map(
+      (choice) => `<p>
     <input type="radio" id="choice" name="answers">
-    <label for="choice">${ choice }</label>
-    </p> `).join('')}
+    <label for="choice">${choice}</label>
+    </p> `,
+    )
+    .join('')}
 </form>
+</div>
+</div>
     `;
-    quizContainer.insertAdjacentHTML('beforeend', markup);
+  quizWrapper.insertAdjacentHTML('afterbegin', markup);
 }
 
-renderQuestion(questions[0]);
+// show the first question
+renderQuestion(questions[0], 0);
+
+nextBtn.addEventListener('click', () => {
+  const quizData = document.querySelector('.quiz__data');
+  const curIndex = Number(quizData.id);
+  // increment with 1 to get the next question from array
+  const index = curIndex + 1;
+  if ((index < questions.length && questionCount !== questions.length)) {
+    questionCount += 1;
+  } 
+  // remove current question
+  quizData.remove();
+
+  renderQuestion(questions[index], index);
+});
