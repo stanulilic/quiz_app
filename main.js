@@ -2,6 +2,7 @@ const nextBtn = document.querySelector('.btn-next');
 const quizWrapper = document.querySelector('.quiz');
 
 let questionCount = 1;
+let index = 0;
 
 const questions = [
   {
@@ -75,14 +76,13 @@ renderQuestion(questions[0], 0);
 
 nextBtn.addEventListener('click', () => {
   const quizData = document.querySelector('.quiz__data');
-  const curIndex = Number(quizData.id);
   // increment with 1 to get the next question from array
-  const index = curIndex + 1;
+  index += 1;
   if ((index < questions.length && questionCount !== questions.length)) {
     questionCount += 1;
-  } 
   // remove current question
   quizData.remove();
-
   renderQuestion(questions[index], index);
+  } 
+
 });
