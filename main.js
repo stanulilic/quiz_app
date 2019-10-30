@@ -14,9 +14,9 @@ const questions = [
       'Mark Ruffalo',
       'The Russo Brothers',
       'Samuel L Jackson',
-      'Christopher Nolan'
+      'Christopher Nolan',
     ],
-    answer: 1
+    answer: 1,
   },
   {
     question: 'Who directed the Titanic Movie?',
@@ -24,9 +24,9 @@ const questions = [
       'David Cameron',
       'Jamie Foxx',
       'The Russo Brothers',
-      'Taika Watiti'
+      'Taika Watiti',
     ],
-    answer: 0
+    answer: 0,
   },
   {
     question: 'Who directed  The Dark Knight?',
@@ -34,9 +34,9 @@ const questions = [
       'Steven Spielberg',
       'Brad Cooper',
       'Mel Gibson',
-      'Christopher Nolan'
+      'Christopher Nolan',
     ],
-    answer: 4
+    answer: 4,
   },
   {
     question: 'Who plays Black Widow in Avengers?',
@@ -44,10 +44,10 @@ const questions = [
       'Emily Brunt',
       'Sandra Bullock',
       'Scarlet Johannson',
-      'Angelina Jolie'
+      'Angelina Jolie',
     ],
-    answer: 3
-  }
+    answer: 3,
+  },
 ];
 
 progressBar.max = questions.length;
@@ -66,7 +66,7 @@ ${quiz.choices
     (choice, i) => `<p>
     <input type="radio" id=${i} name="answers" value="${choice}">
     <label for="choice">${choice}</label>
-    </p> `
+    </p> `,
   )
   .join('')}
 </form>
@@ -80,19 +80,16 @@ ${quiz.choices
 renderQuestion(questions[0], 0);
 
 function showWarning() {
+  const messageElement = document.querySelector('p.warning');
+  // if message already exists
+  if(messageElement) {
+    return;
+  }
   const choicesForm = document.querySelector('.quiz__choices');
   const message = '<p class="warning">Please choose an answer!</p>';
   choicesForm.insertAdjacentHTML('beforeend', message);
 }
 
-/*
-function showProgress(question) {
- const markup = `
- <div class="quiz__progressbar">
- <progress value="${question}" max="${questions.length}"></progress>
- </div>`;
- quizButtons.insertAdjacentHTML('afterend', markup);
-} */
 
 function showProgress(question) {
   progressBar.value = question;
