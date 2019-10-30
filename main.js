@@ -4,6 +4,8 @@ const quizWrapper = document.querySelector('.quiz');
 let questionCount = 1;
 let index = 0;
 let totalScore = 0;
+// store true if correct answer, false if wrong answer
+const userAnswers = [];
 
 const questions = [
   {
@@ -77,22 +79,23 @@ renderQuestion(questions[0], 0);
 
 nextBtn.addEventListener('click', () => {
   const quizData = document.querySelector('.quiz__data');
-  const chosenAnswer = document.querySelector('input[type="radio"]:checked').id;
+  const chosenAnswer = document.querySelector('input[type="radio"]:checked');
   const currentQuestion = Number(quizData.id);
-  const chosenAnswerNum = Number(chosenAnswer);
-
-  // increment with 1 to get the next question from array
+  const chosenAnswerNum = Number(chosenAnswer.id);
+  console.log(currentQuestion);
+ // increment with 1 to get the next question from array
   index += 1;
 
   if ((index < questions.length && questionCount !== questions.length)) {
-    questionCount += 1;
-    // remove current question
-    quizData.remove();
-    renderQuestion(questions[index], index);
     // check if selected value equals to the question answer
     if (chosenAnswerNum === questions[currentQuestion].answer) {
       totalScore += 1;
-    }
+      userAnswers.push({ [`question ${currentQuestion}`]: true });
+    } else userAnswers.push({ [`question ${currentQuestion}`]: false });
+    // remove current question
+    quizData.remove();
+    questionCount += 1;
+    renderQuestion(questions[index], index);
   }
 });
 
