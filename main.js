@@ -101,23 +101,42 @@ nextBtn.addEventListener('click', () => {
   let currentQuestion = Number(quizData.id);
   let chosenAnswerNum = null;
 
+  // Check is question was already answer
+
+  const findQuestion = userAnswers.find(question => question.questionId === currentQuestion);
+  
+  if(findQuestion) {
+    quizData.remove();
+    questionCount += 1;
+    currentQuestion += 1;
+    renderQuestion(questions[currentQuestion], currentQuestion);
+    const chosenField = document.querySelector(`input[id="${userAnswers[currentQuestion].selectedChoice}"]`);
+    if(chosenField) chosenField.checked = true;
+    showProgress(currentQuestion);
+  }
+  else {
+  // check if an answer has been chosen
   if (chosenAnswer) {
     chosenAnswerNum = Number(chosenAnswer.id);
   } else {
     showWarning();
     return;
   }
-
+  // check if its the correct answer
   if (chosenAnswerNum === questions[currentQuestion].answer) {
     totalScore += 1;
     userAnswers.push({
       [`question ${currentQuestion + 1}`]: true,
       selectedChoice: chosenAnswerNum,
+      questionId: currentQuestion,
     });
-  } else {userAnswers.push({
-    [`question ${currentQuestion + 1}`]: false,
-    selectedChoice: chosenAnswerNum,
-  });}
+  } else {
+    userAnswers.push({
+      [`question ${currentQuestion + 1}`]: false,
+      selectedChoice: chosenAnswerNum,
+      questionId: currentQuestion,
+    });
+  }
 
   if (currentQuestion === questions.length - 1) {
     console.log('quiz is finished');
@@ -129,6 +148,7 @@ nextBtn.addEventListener('click', () => {
     renderQuestion(questions[currentQuestion], currentQuestion);
     showProgress(currentQuestion);
   }
+}
 });
 
 prevBtn.addEventListener('click', () => {
