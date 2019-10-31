@@ -138,6 +138,7 @@ prevBtn.addEventListener('click', () => {
   questionCount -= 1;
   quizData.remove();
   renderQuestion(questions[previousQuestion], previousQuestion);
+  showProgress(previousQuestion);
   const chosenField = document.querySelector(`input[id="${userAnswers[previousQuestion].selectedChoice}"]`);
   chosenField.checked = true;
 });
