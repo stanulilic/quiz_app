@@ -1,4 +1,5 @@
 const nextBtn = document.querySelector('.btn-next');
+const prevBtn = document.querySelector('.btn-prev');
 const quizWrapper = document.querySelector('.quiz');
 const progressBar = document.querySelector('progress');
 
@@ -62,13 +63,13 @@ ${quiz.question}
 </h1>
 <form class="quiz__choices">
 ${quiz.choices
-  .map(
-    (choice, i) => `<p>
+    .map(
+      (choice, i) => `<p>
     <input type="radio" id=${i} name="answers" value="${choice}">
     <label for="choice">${choice}</label>
     </p> `,
-  )
-  .join('')}
+    )
+    .join('')}
 </form>
 </div>
 </div>
@@ -82,14 +83,13 @@ renderQuestion(questions[0], 0);
 function showWarning() {
   const messageElement = document.querySelector('p.warning');
   // if message already exists
-  if(messageElement) {
+  if (messageElement) {
     return;
   }
   const choicesForm = document.querySelector('.quiz__choices');
   const message = '<p class="warning">Please choose an answer!</p>';
   choicesForm.insertAdjacentHTML('beforeend', message);
 }
-
 
 function showProgress(question) {
   progressBar.value = question;
@@ -100,7 +100,7 @@ nextBtn.addEventListener('click', () => {
   const chosenAnswer = document.querySelector('input[type="radio"]:checked');
   let currentQuestion = Number(quizData.id);
   let chosenAnswerNum = null;
-  
+
   if (chosenAnswer) {
     chosenAnswerNum = Number(chosenAnswer.id);
   } else {
@@ -110,8 +110,14 @@ nextBtn.addEventListener('click', () => {
 
   if (chosenAnswerNum === questions[currentQuestion].answer) {
     totalScore += 1;
-    userAnswers.push({ [`question ${currentQuestion + 1}`]: true });
-  } else userAnswers.push({ [`question ${currentQuestion + 1}`]: false });
+    userAnswers.push({
+      [`question ${currentQuestion + 1}`]: true,
+      selectedChoice: chosenAnswerNum,
+    });
+  } else {userAnswers.push({
+    [`question ${currentQuestion + 1}`]: false,
+    selectedChoice: chosenAnswerNum,
+  });}
 
   if (currentQuestion === questions.length - 1) {
     console.log('quiz is finished');
@@ -123,4 +129,15 @@ nextBtn.addEventListener('click', () => {
     renderQuestion(questions[currentQuestion], currentQuestion);
     showProgress(currentQuestion);
   }
+});
+
+prevBtn.addEventListener('click', () => {
+  const quizData = document.querySelector('.quiz__data');
+  const currentQuestion = Number(quizData.id);
+  const previousQuestion = currentQuestion - 1;
+  questionCount -= 1;
+  quizData.remove();
+  renderQuestion(questions[previousQuestion], previousQuestion);
+  const chosenField = document.querySelector(`input[id="${userAnswers[previousQuestion].selectedChoice}"]`);
+  chosenField.checked = true;
 });
